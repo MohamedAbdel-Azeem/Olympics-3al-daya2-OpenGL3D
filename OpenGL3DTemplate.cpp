@@ -246,6 +246,7 @@ static void Timer(int value) {
 
 static void game_init() {
 	player = Player();
+    initializeWall();
 }
 
 
