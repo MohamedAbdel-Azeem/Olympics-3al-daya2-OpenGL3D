@@ -85,7 +85,9 @@
     <ClCompile Include="OpenGL3DTemplate.cpp" />
     <ClCompile Include="views\renderFence.cpp" />
     <ClCompile Include="views\renderGround.cpp" />
+    <ClCompile Include="views\renderGun.cpp" />
     <ClCompile Include="views\renderPlayer.cpp" />
+    <ClCompile Include="views\renderTable.cpp" />
     <ClCompile Include="views\renderTarget.cpp" />
     <ClCompile Include="views\renderWall.cpp" />
   </ItemGroup>
@@ -93,7 +95,9 @@
     <ClInclude Include="Headers\model\player.h" />
     <ClInclude Include="Headers\views\renderFence.h" />
     <ClInclude Include="Headers\views\renderGround.h" />
+    <ClInclude Include="Headers\views\renderGun.h" />
     <ClInclude Include="Headers\views\renderPlayer.h" />
+    <ClInclude Include="Headers\views\renderTable.h" />
     <ClInclude Include="Headers\views\renderTarget.h" />
     <ClInclude Include="Headers\views\renderWall.h" />
   </ItemGroup>

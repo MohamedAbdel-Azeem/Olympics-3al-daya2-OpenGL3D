@@ -1,9 +1,11 @@
-#include <glut.h>
 #include "Headers/views/renderPlayer.h"
+#include "Headers/views/renderGun.h"
+#include <glut.h>
 
 
 
-void renderPlayer(float posX, float posY, float posZ) {
+
+void renderPlayer(float posX, float posY, float posZ, bool isHoldingGun) {
     glPushMatrix();  // Save the current transformation matrix
 
     // Position the entire player at (posX, posY, posZ)
@@ -71,13 +73,15 @@ void renderPlayer(float posX, float posY, float posZ) {
     gluDeleteQuadric(rightLeg);
     glPopMatrix();
 
-    // Gun (Cuboid)
-    glColor3f(0.1f, 0.1f, 0.1f); // Dark gray for the gun
-    glPushMatrix();
-    glTranslatef(0.0f, 0.5f, 0.7f);   // Position in front of the player’s hands
-    glScalef(0.1f, 0.1f, 1.5f);       // Scale to make a cuboid shape
-    glutSolidCube(0.4);                // Create a cuboid with cube function
-    glPopMatrix();
+
+    if (isHoldingGun) {
+		glPushMatrix();
+        glTranslatef(0.0f, 0.5f, -0.1f); // Position the gun in the hand
+		glRotatef(90, 0.0f, 0.0f, 1.0f); // Rotate to align with Y-axis
+        renderGun();
+		glPopMatrix();
+    }
+
 
     glPopMatrix(); // Restore the transformation matrix
 }

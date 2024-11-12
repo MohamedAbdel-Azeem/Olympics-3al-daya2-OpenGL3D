@@ -11,6 +11,7 @@
 #include "Headers/views/renderPlayer.h"
 #include "Headers/model/player.h"
 #include "Headers/views/renderFence.h"
+#include "Headers/views/renderTable.h"
 #pragma comment(lib, "User32.lib")
 #define DEG2RAD(a) (a * 0.0174532925)
 
@@ -233,7 +234,9 @@ void Display(void) {
     renderFence(1.5, 0.2, -2.2 , 2.8);
     renderFence(-1.5, 0.2, -2.2 , 2.8);
 
-	renderPlayer(player.posX, player.posY, player.posZ);
+	renderTable(1.2, 0, 1.5f, ! player.isHoldingGun);
+
+	renderPlayer(player.posX, player.posY, player.posZ , player.isHoldingGun);
     
     glFlush();
 }

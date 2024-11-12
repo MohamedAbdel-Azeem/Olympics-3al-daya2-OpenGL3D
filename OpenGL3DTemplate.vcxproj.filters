@@ -23,6 +23,8 @@
     <ClCompile Include="views\renderWall.cpp" />
     <ClCompile Include="views\renderPlayer.cpp" />
     <ClCompile Include="views\renderFence.cpp" />
+    <ClCompile Include="views\renderTable.cpp" />
+    <ClCompile Include="views\renderGun.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Headers\views\renderGround.h" />
@@ -31,5 +33,7 @@
     <ClInclude Include="Headers\views\renderPlayer.h" />
     <ClInclude Include="Headers\model\player.h" />
     <ClInclude Include="Headers\views\renderFence.h" />
+    <ClInclude Include="Headers\views\renderTable.h" />
+    <ClInclude Include="Headers\views\renderGun.h" />
   </ItemGroup>
 </Project>
