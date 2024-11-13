@@ -14,5 +14,4 @@ void renderGround() {
 	glScalef(3, 0.1, 0.1);
 	glutSolidCube(1);
 	glPopMatrix();
-
 }

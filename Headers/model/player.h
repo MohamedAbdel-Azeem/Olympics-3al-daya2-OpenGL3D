@@ -7,6 +7,7 @@ public:
 	float posX, posY, posZ;
 	float rotX, rotY, rotZ;
 	bool isHoldingGun;
+	bool didCollectBullet;
 	Player(float _posX = 0.0f, float _posY = 0.5f, float _posZ = 2.0f, float _rotX = 0.0f, float _rotY = 0.0f, float _rotZ = 0.0f) {
 		posX = _posX;
 		posY = _posY;
@@ -15,6 +16,7 @@ public:
 		rotY = _rotY;
 		rotZ = _rotZ;
 		isHoldingGun = false;
+		didCollectBullet = false;
 	}
 	void move(float x, float y, float z) {
 
@@ -25,6 +27,9 @@ public:
 		float usedRightXBounds = isHoldingGun ? -1.4 : -2.2f;
 
 		float usedZBounds = isHoldingGun? zBoundsWithGun : zBoundsWithoutGun;
+
+		if (posX >= 0.8 && posZ >= 1.7 && posZ <= 2.3)
+			isHoldingGun = true;
 
 		if (posX + x < usedLeftXBounds && posX + x > usedRightXBounds)
 			posX += x;
@@ -40,7 +45,7 @@ public:
 
 	void holdGun() {
 		if (posX >= 0.8 && posZ >= 1.7 && posZ <= 2.3)
-			isHoldingGun = true;	
+			isHoldingGun = true;
 	}
 
 };

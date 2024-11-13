@@ -81,7 +81,7 @@ void renderWall(float x, float y, float z , bool rotate) {
 		glPushMatrix();
 		glPushMatrix();
 		glColor3f(wallColor.r, wallColor.g, wallColor.b);
-		glScalef(5, 1, 0.2);
+		glScalef(5, 1.5, 0.2);
 		glTranslatef(x, y, z);
 		glutSolidCube(1);
 		renderLamp(rotate);
@@ -92,7 +92,7 @@ void renderWall(float x, float y, float z , bool rotate) {
 		glPushMatrix();
 		glPushMatrix();
 		glColor3f(wallColor.r, wallColor.g, wallColor.b);
-		glScalef(0.2, 1, 5);
+		glScalef(0.2, 1.5, 5);
 		glTranslatef(x, y, z);
 		glutSolidCube(1);
 		renderLamp(rotate);
