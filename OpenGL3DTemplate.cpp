@@ -159,7 +159,7 @@ void cam() {
     camera.look();
 }
 
-void controlCamKeyboard() {
+void controlKeyboard() {
     if (keys['w']) {
         camera.moveForward(moveSpeed);
     }
@@ -193,6 +193,9 @@ void controlCamKeyboard() {
         camera.center = Vector3f(0, 0, 0);
         camera.top = Vector3f(0, 1, 0);
     }
+	if (keys['h']) {
+		player.holdGun();
+	}
     if (keys[27]) {
         isMouseLocked = false;
         exit(EXIT_SUCCESS);
@@ -220,6 +223,12 @@ void controlPlayerKeyboard(int key, int x, int y) {
     }
 }
 
+void playerKeyboard(unsigned char key, int x, int y) {
+    if (key == 'h') {
+		player.holdGun();
+    }
+}
+
 void Display(void) {
     
 
@@ -242,7 +251,7 @@ void Display(void) {
 }
 
 static void Timer(int value) {
-	controlCamKeyboard();
+	controlKeyboard();
 	glutPostRedisplay();
 	glutTimerFunc(16, Timer, 0);
 }
