@@ -3,6 +3,8 @@
 
 void renderTarget(float posX, float posY, float posZ) {
 
+	GLdouble clipPlane[] = { 0.0, 0.0, 1.0, 0.0 };
+
 	glPushMatrix();
 
 	glTranslatef(posX, posY, posZ);
@@ -41,6 +43,27 @@ void renderTarget(float posX, float posY, float posZ) {
 	glScalef(0.4, 0.4, 0.005);
 	glutSolidCube(1);
 	glPopMatrix();
+
+	// Target Paper First Circle (Sphere)
+	glPushMatrix();
+	glClipPlane(GL_CLIP_PLANE0, clipPlane);
+	glEnable(GL_CLIP_PLANE0);
+	glColor3f(1, 0.9, 0);
+	glTranslatef(0, 0.92, 0);
+	glutSolidSphere(0.15, 20, 20);
+	glDisable(GL_CLIP_PLANE0);
+	glPopMatrix();
+
+	// Target Paper Second Circle (Sphere)
+	glPushMatrix();
+	glClipPlane(GL_CLIP_PLANE0, clipPlane);
+	glEnable(GL_CLIP_PLANE0);
+	glColor3f(1,0, 0);
+	glTranslatef(0, 0.92, 0.07);
+	glutSolidSphere(0.1, 20, 20);
+	glDisable(GL_CLIP_PLANE0);
+	glPopMatrix();
+
 
 	glPopMatrix();
 }

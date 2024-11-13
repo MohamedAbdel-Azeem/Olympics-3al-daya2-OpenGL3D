@@ -251,6 +251,7 @@ void Display(void) {
 
 
     renderTarget(0,0.1,-1.8);
+
     
     glFlush();
 }
