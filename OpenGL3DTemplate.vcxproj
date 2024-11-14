@@ -93,6 +93,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Headers\model\player.h" />
+    <ClInclude Include="Headers\views\renderFans.h" />
     <ClInclude Include="Headers\views\renderFence.h" />
     <ClInclude Include="Headers\views\renderGround.h" />
     <ClInclude Include="Headers\views\renderGun.h" />

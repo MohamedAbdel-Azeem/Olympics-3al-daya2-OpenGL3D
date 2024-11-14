@@ -13,6 +13,7 @@
 #include "Headers/views/renderFence.h"
 #include "Headers/views/renderTable.h"
 #include "Headers/views/renderTarget.h"
+#include "Headers/views/renderFans.h"
 #pragma comment(lib, "User32.lib")
 #define DEG2RAD(a) (a * 0.0174532925)
 
@@ -22,6 +23,8 @@ Player player;
 int mouseX, mouseY;
 int windowWidth = 960, windowHeight = 640; // Increased window size
 bool isMouseLocked = true; // Flag to lock the mouse inside
+
+bool animateFans = false;
 
 float moveSpeed = 0.05f; // Camera movement speed
 
@@ -195,7 +198,7 @@ void controlKeyboard() {
         camera.top = Vector3f(0, 1, 0);
     }
 	if (keys['h']) {
-		player.holdGun();
+		animateFans = !animateFans;
 	}
     if (keys[27]) {
         isMouseLocked = false;
@@ -224,11 +227,6 @@ void controlPlayerKeyboard(int key, int x, int y) {
     }
 }
 
-void playerKeyboard(unsigned char key, int x, int y) {
-    if (key == 'h') {
-		player.holdGun();
-    }
-}
 
 void Display(void) {
     
@@ -252,6 +250,8 @@ void Display(void) {
 
     renderTarget(0,0.1,-1.8);
 
+    renderFans(animateFans);
+
     
     glFlush();
 }
@@ -265,6 +265,8 @@ static void Timer(int value) {
 static void game_init() {
 	player = Player();
     initializeWall();
+    initializeFans(-1.0f, 1.8, 0, -1.0);
+	initializeFans(-1.0f, -1.8, 0, 1.0);
 }
 
 
