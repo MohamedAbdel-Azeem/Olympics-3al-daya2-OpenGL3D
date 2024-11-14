@@ -8,13 +8,14 @@ public:
 	float rotX, rotY, rotZ;
 	bool isHoldingGun;
 	bool didCollectBullet;
-	Player(float _posX = 0.0f, float _posY = 0.5f, float _posZ = 2.0f, float _rotX = 0.0f, float _rotY = 0.0f, float _rotZ = 0.0f) {
+	int rotationState = 2;
+	Player(float _posX = 0.0f, float _posY = 0.5f, float _posZ = 2.0f) {
 		posX = _posX;
 		posY = _posY;
 		posZ = _posZ;
-		rotX = _rotX;
-		rotY = _rotY;
-		rotZ = _rotZ;
+		rotX = 0;
+		rotY = 180;
+		rotZ = 0;
 		isHoldingGun = false;
 		didCollectBullet = false;
 	}
@@ -42,10 +43,9 @@ public:
 		rotY += y;
 		rotZ += z;
 	}
-
-	void holdGun() {
-		if (posX >= 0.8 && posZ >= 1.7 && posZ <= 2.3)
-			isHoldingGun = true;
+	void rotate() {
+		rotationState = (rotationState + 1) % 4; // Cycle through 0, 1, 2, 3
+		rotY = rotationState * -90.0f; // Rotate by 90 degrees each time
 	}
 
 };

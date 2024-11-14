@@ -1,17 +1,18 @@
 #include "Headers/views/renderPlayer.h"
 #include "Headers/views/renderGun.h"
+#include <cmath>
 #include <glut.h>
 
 
 
 
-void renderPlayer(float posX, float posY, float posZ, bool isHoldingGun) {
+void renderPlayer(float posX, float posY, float posZ,float rotX,float rotY,float rotZ, bool isHoldingGun , bool animateGun) {
     glPushMatrix();  // Save the current transformation matrix
 
     // Position the entire player at (posX, posY, posZ)
     glTranslatef(posX, posY, posZ);
 	glScalef(0.5f, 0.5f, 0.5f); // Scale down the player
-	glRotatef(180, 0.0f, 1.0f, 0.0f); // Rotate to face the camera
+	glRotatef(rotY, 0, 1, 0); // Rotate to face the camera
     
     glColor3f(0.8f, 0.5f, 0.3f);
     // Head (Sphere)
@@ -75,9 +76,17 @@ void renderPlayer(float posX, float posY, float posZ, bool isHoldingGun) {
 
 
     if (isHoldingGun) {
+        static float rotAngleAnime = 0;
+		if (animateGun) {
+			rotAngleAnime = sin(glutGet(GLUT_ELAPSED_TIME) * 0.001) * 15;
+		}
+		else {
+			rotAngleAnime = 0;
+		}
 		glPushMatrix();
         glTranslatef(0.0f, 0.5f, -0.1f); // Position the gun in the hand
 		glRotatef(90, 0.0f, 0.0f, 1.0f); // Rotate to align with Y-axis
+		glRotatef(rotAngleAnime, 1.0f, 0.0f, 0.0f); // Rotate to align with X-axis
         renderGun();
 		glPopMatrix();
     }

@@ -25,6 +25,8 @@ int windowWidth = 960, windowHeight = 640; // Increased window size
 bool isMouseLocked = true; // Flag to lock the mouse inside
 
 bool animateFans = false;
+bool animateTable = false;
+bool animateGun = false;
 
 float moveSpeed = 0.05f; // Camera movement speed
 
@@ -197,9 +199,21 @@ void controlKeyboard() {
         camera.center = Vector3f(0, 0, 0);
         camera.top = Vector3f(0, 1, 0);
     }
-	if (keys['h']) {
+	if (keys['f']) {
 		animateFans = !animateFans;
 	}
+	if (keys['r']) {
+		player.rotate();
+		keys['r'] = false;
+	}
+    if (keys['h']) {
+		animateTable = !animateTable;
+        keys['h'] = false;
+    }
+    if (keys['g']) {
+		animateGun = !animateGun;
+		keys['g'] = false;
+    }
     if (keys[27]) {
         isMouseLocked = false;
         exit(EXIT_SUCCESS);
@@ -242,9 +256,9 @@ void Display(void) {
     renderFence(1.5, 0.2, -2.2 , 2.8);
     renderFence(-1.5, 0.2, -2.2 , 2.8);
 
-	renderTable(1.2, 0, 1.5f, ! player.isHoldingGun);
+	renderTable(1.2, 0, 1.5f, ! player.isHoldingGun,animateTable,animateGun);
 
-	renderPlayer(player.posX, player.posY, player.posZ , player.isHoldingGun);
+	renderPlayer(player.posX, player.posY, player.posZ, player.rotX , player.rotY, player.rotZ , player.isHoldingGun , animateGun);
 
 
 

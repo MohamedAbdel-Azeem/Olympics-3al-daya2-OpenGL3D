@@ -1,17 +1,30 @@
 #include "Headers/views/renderTable.h"
 #include "Headers/views/renderGun.h"
+#include <cmath>
 #include <glut.h>
 
-void renderTable(float posX, float posY, float posZ, bool havingGun) {
+void renderTable(float posX, float posY, float posZ, bool havingGun, bool animateTable, bool animateGun) {
     float tableWidth = 2.0f;
     float tableHeight = 0.1f;
     float legRadius = 0.1f;
     float legHeight = 1.0f;
 
+    static float yExtraScale = 0;
+	static float zExtraScale = 0;
+
+	if (animateTable) {
+		yExtraScale = sin(glutGet(GLUT_ELAPSED_TIME) * 0.001) * 0.1;
+		zExtraScale = sin(glutGet(GLUT_ELAPSED_TIME) * 0.001) * 0.1;
+    }
+    else {
+		yExtraScale = 0;
+		zExtraScale = 0;
+    }
+
     // Move to table position
     glPushMatrix();
     glTranslatef(posX, posY, posZ);
-	glScalef(0.2f, 0.5f, 0.5f); // Scale down the table
+	glScalef(0.2f, 0.5f+yExtraScale, 0.5f+zExtraScale); // Scale down the table
 
     // Render table top (cube)
     glPushMatrix();
@@ -59,8 +72,16 @@ void renderTable(float posX, float posY, float posZ, bool havingGun) {
 
 
     if (havingGun) {
+        static float gunRotAngle = 0;
+		if (animateGun) {
+			gunRotAngle = sin(glutGet(GLUT_ELAPSED_TIME) * 0.001) * 60;
+		}
+		else {
+			gunRotAngle = 0;
+		}
 		glPushMatrix();
 		glTranslatef(0.0f, 1.05f, -0.2f);
+		glRotatef(gunRotAngle, 0.0f, 1.0f, 0.0f);
         renderGun();
         glPopMatrix();
     }

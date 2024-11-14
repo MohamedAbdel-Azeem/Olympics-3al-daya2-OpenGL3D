@@ -3,6 +3,6 @@
 #define RENDER_Table_H
 
 
-void renderTable(float posX, float posY, float posZ, bool havingGun);
+void renderTable(float posX, float posY, float posZ, bool havingGun,bool animateTable, bool animateGun);
 
 #endif
