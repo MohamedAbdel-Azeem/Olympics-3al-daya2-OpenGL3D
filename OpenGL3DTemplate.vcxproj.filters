@@ -37,5 +37,6 @@
     <ClInclude Include="Headers\views\renderGun.h" />
     <ClInclude Include="Headers\views\renderFans.h" />
     <ClInclude Include="Headers\views\renderBullet.h" />
+    <ClInclude Include="Headers\views\renderChair.h" />
   </ItemGroup>
 </Project>

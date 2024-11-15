@@ -15,6 +15,7 @@
 #include "Headers/views/renderTarget.h"
 #include "Headers/views/renderFans.h"
 #include "Headers/views/renderBullet.h"
+#include "Headers/views/renderChair.h"
 #pragma comment(lib, "User32.lib")
 #define DEG2RAD(a) (a * 0.0174532925)
 
@@ -29,6 +30,8 @@ bool animateFans = false;
 bool animateTable = false;
 bool animateGun = false;
 bool animateBullet = false;
+bool animateFence = false;
+bool animateChair = false;
 
 float moveSpeed = 0.05f; // Camera movement speed
 
@@ -221,6 +224,14 @@ void controlKeyboard() {
 		animateBullet = !animateBullet;
 		keys['b'] = false;
     }
+    if (keys['v']) {
+		animateFence = !animateFence;
+		keys['v'] = false;
+    }
+    if (keys['j']) {
+		animateChair = !animateChair;
+		keys['j'] = false;
+    }
     if (keys[27]) {
         isMouseLocked = false;
         exit(EXIT_SUCCESS);
@@ -260,8 +271,8 @@ void Display(void) {
 	renderWall(-12, 0.5, 0,false);
 	renderWall(0, 0.5, -12,true);
 
-    renderFence(1.5, 0.2, -2.2 , 2.8);
-    renderFence(-1.5, 0.2, -2.2 , 2.8);
+    renderFence(1.5, 0.2, -2.2 , 2.8 , animateFence);
+    renderFence(-1.5, 0.2, -2.2 , 2.8 , animateFence);
 
 	renderTable(1.2, 0, 1.5f, ! player.isHoldingGun,animateTable,animateGun);
 
@@ -272,6 +283,8 @@ void Display(void) {
     renderFans(animateFans);
 
 	renderBullet(1.2, 0.55, 1.5, animateBullet, player.didCollectBullet);
+
+	renderChair(-1, 0, 1.5, animateChair);
     
     glFlush();
 }
@@ -287,6 +300,7 @@ static void game_init() {
     initializeWall();
     initializeFans(-1.0f, 1.8, 0, -1.0);
 	initializeFans(-1.0f, -1.8, 0, 1.0);
+	initializeFenceAnimation();
 }
 
 
