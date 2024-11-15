@@ -14,6 +14,7 @@
 #include "Headers/views/renderTable.h"
 #include "Headers/views/renderTarget.h"
 #include "Headers/views/renderFans.h"
+#include "Headers/views/renderBullet.h"
 #pragma comment(lib, "User32.lib")
 #define DEG2RAD(a) (a * 0.0174532925)
 
@@ -27,6 +28,7 @@ bool isMouseLocked = true; // Flag to lock the mouse inside
 bool animateFans = false;
 bool animateTable = false;
 bool animateGun = false;
+bool animateBullet = false;
 
 float moveSpeed = 0.05f; // Camera movement speed
 
@@ -201,6 +203,7 @@ void controlKeyboard() {
     }
 	if (keys['f']) {
 		animateFans = !animateFans;
+		keys['f'] = false;
 	}
 	if (keys['r']) {
 		player.rotate();
@@ -213,6 +216,10 @@ void controlKeyboard() {
     if (keys['g']) {
 		animateGun = !animateGun;
 		keys['g'] = false;
+    }
+    if (keys['b']) {
+		animateBullet = !animateBullet;
+		keys['b'] = false;
     }
     if (keys[27]) {
         isMouseLocked = false;
@@ -260,12 +267,11 @@ void Display(void) {
 
 	renderPlayer(player.posX, player.posY, player.posZ, player.rotX , player.rotY, player.rotZ , player.isHoldingGun , animateGun);
 
-
-
     renderTarget(0,0.1,-1.8);
 
     renderFans(animateFans);
 
+	renderBullet(1.2, 0.55, 1.5, animateBullet, player.didCollectBullet);
     
     glFlush();
 }

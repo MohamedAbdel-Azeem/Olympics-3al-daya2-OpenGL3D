@@ -32,6 +32,9 @@ public:
 		if (posX >= 0.8 && posZ >= 1.7 && posZ <= 2.3)
 			isHoldingGun = true;
 
+		if (posX >= 0.8 && posZ <= 1.5 && isHoldingGun)
+			didCollectBullet = true;
+
 		if (posX + x < usedLeftXBounds && posX + x > usedRightXBounds)
 			posX += x;
 		posY += y;
