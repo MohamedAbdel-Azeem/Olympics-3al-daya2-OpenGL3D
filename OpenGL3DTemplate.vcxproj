@@ -99,6 +99,7 @@
     <ClInclude Include="Headers\views\renderFence.h" />
     <ClInclude Include="Headers\views\renderGround.h" />
     <ClInclude Include="Headers\views\renderGun.h" />
+    <ClInclude Include="Headers\views\renderLaser.h" />
     <ClInclude Include="Headers\views\renderPlayer.h" />
     <ClInclude Include="Headers\views\renderTable.h" />
     <ClInclude Include="Headers\views\renderTarget.h" />

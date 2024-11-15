@@ -15,6 +15,7 @@
 #include "Headers/views/renderTarget.h"
 #include "Headers/views/renderFans.h"
 #include "Headers/views/renderChair.h"
+#include "Headers/views/renderLaser.h"
 #pragma comment(lib, "User32.lib")
 #define DEG2RAD(a) (a * 0.0174532925)
 
@@ -31,6 +32,10 @@ bool animateGun = false;
 bool animateBullet = false;
 bool animateFence = false;
 bool animateChair = false;
+
+
+
+float sphere1X, sphere1Y, sphere1Z, sphere2X, sphere2Y, sphere2Z;
 
 float moveSpeed = 0.05f; // Camera movement speed
 
@@ -231,6 +236,10 @@ void controlKeyboard() {
 		animateChair = !animateChair;
 		keys['j'] = false;
     }
+    if (keys['m']) {
+		player.shoot(sphere1X, sphere1Y, sphere1Z, 0.05, sphere2X, sphere2Y, sphere2Z, 0.15);
+		keys['m'] = false;
+    }
     if (keys[27]) {
         isMouseLocked = false;
         exit(EXIT_SUCCESS);
@@ -277,12 +286,15 @@ void Display(void) {
 
 	renderPlayer(player.posX, player.posY, player.posZ, player.rotX , player.rotY, player.rotZ , player.isHoldingGun , animateGun);
 
-    renderTarget(0,0.1,-1.8);
+    renderTarget(0,0.1,-1.8, sphere1X, sphere1Y, sphere1Z, sphere2X, sphere2Y, sphere2Z);
 
     renderFans(animateFans);
 
 	renderChair(-1, 0, 1.5, animateChair);
     
+	if (player.isHoldingGun && player.didCollectBullet)
+        renderLaser(player.posX, player.posY, player.posZ);
+
     glFlush();
 }
 

@@ -2,6 +2,10 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+#include <stdio.h>
+
+using namespace std;
+
 class Player {
 public:
 	float posX, posY, posZ;
@@ -9,6 +13,7 @@ public:
 	bool isHoldingGun;
 	bool didCollectBullet;
 	int rotationState = 2;
+	int score;
 	Player(float _posX = 0.0f, float _posY = 0.5f, float _posZ = 2.0f) {
 		posX = _posX;
 		posY = _posY;
@@ -18,6 +23,7 @@ public:
 		rotZ = 0;
 		isHoldingGun = false;
 		didCollectBullet = false;
+		score = 0;
 	}
 	void move(float x, float y, float z) {
 
@@ -49,6 +55,34 @@ public:
 	void rotate() {
 		rotationState = (rotationState + 1) % 4; // Cycle through 0, 1, 2, 3
 		rotY = rotationState * -90.0f; // Rotate by 90 degrees each time
+	}
+
+	void shoot(float sphere1X, float sphere1Y, float sphere1Z, float sphere1Radius, float sphere2X, float sphere2Y, float sphere2Z, float sphere2Radius) {
+		if (! isHoldingGun || ! didCollectBullet) {
+			return;
+		}
+
+
+		// Check if the shot hits the first sphere (Red)
+		float distance1X = sqrt(pow(posX - sphere1X, 2));
+
+		
+		if (distance1X <= sphere1Radius && sphere1Y <= 1) {
+			score+= 10;
+			std::cout << "hit red Sphere, Score: " << score << std::endl;
+			return;
+		}
+
+		// Check if the shot hits the second sphere (Yellow)
+		float distance2 = sqrt(pow(posX - sphere2X, 2));
+		if (distance2 <= sphere2Radius && sphere2Y <= 1) {
+			score+= 5;
+			std::cout << "hit yellow Sphere, Score: " << score << std::endl;
+			return;
+		}
+
+		std::cout << "Missed, Score: " << score << std::endl;
+
 	}
 
 };

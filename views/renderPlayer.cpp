@@ -10,8 +10,8 @@ void renderPlayer(float posX, float posY, float posZ,float rotX,float rotY,float
     glPushMatrix();  // Save the current transformation matrix
 
     // Position the entire player at (posX, posY, posZ)
-    glTranslatef(posX, posY, posZ);
-	glScalef(0.5f, 0.5f, 0.5f); // Scale down the player
+    glTranslatef(posX, posY + 0.1, posZ);
+	glScalef(0.6f, 0.7f, 0.6f); // Scale down the player
 	glRotatef(rotY, 0, 1, 0); // Rotate to face the camera
     
     glColor3f(0.8f, 0.5f, 0.3f);
