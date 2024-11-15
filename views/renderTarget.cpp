@@ -1,9 +1,16 @@
+#include <cmath>
 #include <glut.h>
 #include "../Headers/views/renderTarget.h"
 
 void renderTarget(float posX, float posY, float posZ) {
 
 	GLdouble clipPlane[] = { 0.0, 0.0, 1.0, 0.0 };
+
+	static float offsetY = 0;
+	static float offsetX = 0;
+	offsetY = sin(glutGet(GLUT_ELAPSED_TIME) * 0.001) * 0.1;
+	offsetX = cos(glutGet(GLUT_ELAPSED_TIME) * 0.001) * 0.1;
+
 
 	glPushMatrix();
 
@@ -40,7 +47,7 @@ void renderTarget(float posX, float posY, float posZ) {
 	glPushMatrix();
 	glColor3f(1, 1, 1);
 	glTranslatef(0, 0.9, 0);
-	glScalef(0.4, 0.4, 0.005);
+	glScalef(0.6, 0.6, 0.005);
 	glutSolidCube(1);
 	glPopMatrix();
 
@@ -49,7 +56,7 @@ void renderTarget(float posX, float posY, float posZ) {
 	glClipPlane(GL_CLIP_PLANE0, clipPlane);
 	glEnable(GL_CLIP_PLANE0);
 	glColor3f(1, 0.9, 0);
-	glTranslatef(0, 0.92, 0);
+	glTranslatef(0 + offsetX, 0.92 + offsetY, 0);
 	glutSolidSphere(0.15, 20, 20);
 	glDisable(GL_CLIP_PLANE0);
 	glPopMatrix();
@@ -59,7 +66,7 @@ void renderTarget(float posX, float posY, float posZ) {
 	glClipPlane(GL_CLIP_PLANE0, clipPlane);
 	glEnable(GL_CLIP_PLANE0);
 	glColor3f(1,0, 0);
-	glTranslatef(0, 0.92, 0.07);
+	glTranslatef(0 + offsetX, 0.92 + offsetY, 0.07);
 	glutSolidSphere(0.1, 20, 20);
 	glDisable(GL_CLIP_PLANE0);
 	glPopMatrix();

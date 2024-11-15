@@ -1,9 +1,10 @@
 #include "Headers/views/renderTable.h"
 #include "Headers/views/renderGun.h"
+#include "Headers/views/renderBullet.h"
 #include <cmath>
 #include <glut.h>
 
-void renderTable(float posX, float posY, float posZ, bool havingGun, bool animateTable, bool animateGun) {
+void renderTable(float posX, float posY, float posZ, bool havingGun, bool havingBullet, bool animateTable, bool animateGun, bool animateBullet){
     float tableWidth = 2.0f;
     float tableHeight = 0.1f;
     float legRadius = 0.1f;
@@ -85,6 +86,14 @@ void renderTable(float posX, float posY, float posZ, bool havingGun, bool animat
         renderGun();
         glPopMatrix();
     }
+
+	if (havingBullet) {
+		glPushMatrix();
+		    glScalef(2.0f, 1.5f, 2.0f);
+		    renderBullet(0.0f, 0.7f, 0, animateBullet, !havingBullet);
+		glPopMatrix();
+	}
+
 
     glPopMatrix();
 }

@@ -14,7 +14,6 @@
 #include "Headers/views/renderTable.h"
 #include "Headers/views/renderTarget.h"
 #include "Headers/views/renderFans.h"
-#include "Headers/views/renderBullet.h"
 #include "Headers/views/renderChair.h"
 #pragma comment(lib, "User32.lib")
 #define DEG2RAD(a) (a * 0.0174532925)
@@ -274,15 +273,13 @@ void Display(void) {
     renderFence(1.5, 0.2, -2.2 , 2.8 , animateFence);
     renderFence(-1.5, 0.2, -2.2 , 2.8 , animateFence);
 
-	renderTable(1.2, 0, 1.5f, ! player.isHoldingGun,animateTable,animateGun);
+	renderTable(1.2, 0, 1.5f, ! player.isHoldingGun,!player.didCollectBullet,animateTable,animateGun, animateBullet);
 
 	renderPlayer(player.posX, player.posY, player.posZ, player.rotX , player.rotY, player.rotZ , player.isHoldingGun , animateGun);
 
     renderTarget(0,0.1,-1.8);
 
     renderFans(animateFans);
-
-	renderBullet(1.2, 0.55, 1.5, animateBullet, player.didCollectBullet);
 
 	renderChair(-1, 0, 1.5, animateChair);
     
