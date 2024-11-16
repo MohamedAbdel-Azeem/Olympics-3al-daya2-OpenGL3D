@@ -18,6 +18,7 @@
 #include "Headers/views/renderFans.h"
 #include "Headers/views/renderChair.h"
 #include "Headers/views/renderLaser.h"
+#include "Headers/SoundPlayer.h"
 #pragma comment(lib, "User32.lib")
 #define DEG2RAD(a) (a * 0.0174532925)
 
@@ -304,6 +305,7 @@ void Display(void) {
 		std::string score = "You Won! Your Score is: " + std::to_string(player.score);
 		renderBitmapString(-0.5, 0, GLUT_BITMAP_TIMES_ROMAN_24, score.c_str());
 		glFlush();
+		SoundPlayer_playGameEndMusic();
 		return;
     }
 
@@ -312,6 +314,7 @@ void Display(void) {
         camera.reset();
 		renderBitmapString(-0.5, 0, GLUT_BITMAP_TIMES_ROMAN_24, "Game Over, Time is Up!");
 		glFlush();
+        SoundPlayer_playGameOverMusic();
 		return;
     }
 
@@ -361,10 +364,12 @@ static void Timer(int value) {
 
     if (player.bulletsUsed == 3) {
 		isGameWin = true;
+		camera.reset();
     }
 
 	if (getTime() >= GAME_TIME) {
 		isGameLose = true;
+		camera.reset();
     }
 
 	controlKeyboard();
@@ -379,6 +384,8 @@ static void game_init() {
 	initializeFans(-1.0f, -1.8, 0, 1.0);
 	initializeFenceAnimation();
 	startTime = steady_clock::now();
+	SoundPlayer_init();
+	SoundPlayer_playBackgroundMusic();
 }
 
 

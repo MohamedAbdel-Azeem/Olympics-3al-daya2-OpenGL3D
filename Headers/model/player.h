@@ -3,6 +3,7 @@
 #define PLAYER_H
 
 #include <stdio.h>
+#include "Headers/SoundPlayer.h"
 
 using namespace std;
 
@@ -37,12 +38,21 @@ public:
 
 		float usedZBounds = isHoldingGun? zBoundsWithGun : zBoundsWithoutGun;
 
-		if (posX >= 0.8 && posZ >= 1.7 && posZ <= 2.3)
+		if (posX >= 0.8 && posZ >= 1.7 && posZ <= 2.3) {		
+			if (!isHoldingGun) {
+				SoundPlayer_PlayGunReload();
+			}
 			isHoldingGun = true;
+		}
+			
 
-		if (posX >= 0.8 && posZ <= 1.5 && isHoldingGun)
+		if (posX >= 0.8 && posZ <= 1.5 && isHoldingGun) {
+			if (!didCollectBullet) {
+				SoundPlayer_PlayGunReload();
+			}
 			didCollectBullet = true;
-
+		}
+			
 		if (posX + x < usedLeftXBounds && posX + x > usedRightXBounds)
 			posX += x;
 		posY += y;
@@ -64,6 +74,7 @@ public:
 			return;
 		}
 
+		SoundPlayer_playGunShotMusic();
 
 		bulletsUsed++;
 

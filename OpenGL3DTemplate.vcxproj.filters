@@ -40,4 +40,7 @@
     <ClInclude Include="Headers\views\renderChair.h" />
     <ClInclude Include="Headers\views\renderLaser.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Media Include="..\..\..\..\Downloads\Gun_reload.mp3" />
+  </ItemGroup>
 </Project>
