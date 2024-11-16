@@ -6,6 +6,8 @@
 #include <math.h>
 #include <chrono>
 #include <thread>
+#include <string>
+#include <ctime>
 #include "Headers/views/renderGround.h"
 #include "Headers/views/renderWall.h"
 #include "Headers/views/renderPlayer.h"
@@ -19,6 +21,8 @@
 #pragma comment(lib, "User32.lib")
 #define DEG2RAD(a) (a * 0.0174532925)
 
+using namespace std;
+using namespace std::chrono;
 
 Player player;
 
@@ -33,7 +37,11 @@ bool animateBullet = false;
 bool animateFence = false;
 bool animateChair = false;
 
+bool isGameLose = false;
+bool isGameWin = false;
 
+steady_clock::time_point startTime;
+const int GAME_TIME = 20;
 
 float sphere1X, sphere1Y, sphere1Z, sphere2X, sphere2Y, sphere2Z;
 
@@ -136,6 +144,12 @@ public:
         view = view * cos(DEG2RAD(a)) + right * sin(DEG2RAD(a));
         right = view.cross(top);
         center = eye + view;
+    }
+
+    void reset() {
+		eye = Vector3f(1.0f, 1.0f, 5.0f);
+		center = Vector3f(0.0f, 0.0f, 0.0f);
+		top = Vector3f(0.0f, 1.0f, 0.0f);
     }
 };
 
@@ -267,9 +281,40 @@ void controlPlayerKeyboard(int key, int x, int y) {
     }
 }
 
+void renderBitmapString(float x, float y, void* font, const char* string) {
+    glColor3f(1.0f, 1.0f, 1.0f);
+    glRasterPos2f(x, y);
+    while (*string) {
+        glutBitmapCharacter(font, *string);
+        string++;
+    }
+}
+
+int getTime() {
+	return duration_cast<seconds>(steady_clock::now() - startTime).count();
+}
+
 
 void Display(void) {
     
+
+    if (isGameWin) {
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		camera.reset();
+		std::string score = "You Won! Your Score is: " + std::to_string(player.score);
+		renderBitmapString(-0.5, 0, GLUT_BITMAP_TIMES_ROMAN_24, score.c_str());
+		glFlush();
+		return;
+    }
+
+    if (isGameLose) {
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        camera.reset();
+		renderBitmapString(-0.5, 0, GLUT_BITMAP_TIMES_ROMAN_24, "Game Over, Time is Up!");
+		glFlush();
+		return;
+    }
+
 
     cam();
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -292,6 +337,19 @@ void Display(void) {
 
 	renderChair(-1, 0, 1.5, animateChair);
     
+    int timeLeft = GAME_TIME - getTime();
+    std::string time_left = "Time Left: " + std::to_string(timeLeft);
+
+	renderBitmapString(1.5, 2.5, GLUT_BITMAP_TIMES_ROMAN_24, time_left.c_str());
+
+	std::string objective1 = "Objective: Collect the Gun";
+	std::string objective2 = "Objective: Collect the Bullet";
+	std::string objective3 = "Objective: Shoot the Target using 3 bullets";
+	renderBitmapString(1.5, 3.0, GLUT_BITMAP_TIMES_ROMAN_24, objective3.c_str());
+	renderBitmapString(1.5, 3.5, GLUT_BITMAP_TIMES_ROMAN_24, objective2.c_str());
+	renderBitmapString(1.5, 4.0, GLUT_BITMAP_TIMES_ROMAN_24, objective1.c_str());
+
+
 	if (player.isHoldingGun && player.didCollectBullet)
         renderLaser(player.posX, player.posY, player.posZ);
 
@@ -299,6 +357,16 @@ void Display(void) {
 }
 
 static void Timer(int value) {
+
+
+    if (player.bulletsUsed == 3) {
+		isGameWin = true;
+    }
+
+	if (getTime() >= GAME_TIME) {
+		isGameLose = true;
+    }
+
 	controlKeyboard();
 	glutPostRedisplay();
 	glutTimerFunc(16, Timer, 0);
@@ -310,6 +378,7 @@ static void game_init() {
     initializeFans(-1.0f, 1.8, 0, -1.0);
 	initializeFans(-1.0f, -1.8, 0, 1.0);
 	initializeFenceAnimation();
+	startTime = steady_clock::now();
 }
 
 
@@ -325,8 +394,7 @@ void main(int argc, char** argv) {
     glutPassiveMotionFunc(MouseMovement);
     glutSetCursor(GLUT_CURSOR_NONE);
     glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB | GLUT_DEPTH);
-    glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
-
+    glClearColor(0.53f, 0.81f, 0.92f, 0.0f);
 
 	glutTimerFunc(0,Timer, 0);
 	glutSpecialFunc(controlPlayerKeyboard);

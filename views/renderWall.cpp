@@ -4,7 +4,7 @@
 #include <glut.h>
 
 
-const int colorChangeInterval = 2000; //2000 ms = 2 seconds
+const int colorChangeInterval = 1000; //1000 ms = 1 seconds
 
 struct color {
 	float r, g, b;

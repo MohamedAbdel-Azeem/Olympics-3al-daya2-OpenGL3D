@@ -14,6 +14,7 @@ public:
 	bool didCollectBullet;
 	int rotationState = 2;
 	int score;
+	int bulletsUsed;
 	Player(float _posX = 0.0f, float _posY = 0.5f, float _posZ = 2.0f) {
 		posX = _posX;
 		posY = _posY;
@@ -24,6 +25,7 @@ public:
 		isHoldingGun = false;
 		didCollectBullet = false;
 		score = 0;
+		bulletsUsed = 0;
 	}
 	void move(float x, float y, float z) {
 
@@ -62,6 +64,8 @@ public:
 			return;
 		}
 
+
+		bulletsUsed++;
 
 		// Check if the shot hits the first sphere (Red)
 		float distance1X = sqrt(pow(posX - sphere1X, 2));
